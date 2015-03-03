@@ -1,0 +1,115 @@
+<!--
+
+     Copyright (C) 2015  Telosys-tools-saas project org. ( http://telosys-tools-saas.github.io/ )
+
+     Licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+             http://www.gnu.org/licenses/lgpl.html
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<div>
+
+    <h2 translate="telosys-tools-saasApp.author.home.title">Author</h2>
+
+    <button class="btn btn-primary btn-lg"  ng-click="listCtrl.openCreate()">
+        <span class="glyphicon glyphicon-flash"></span> <span translate="telosys-tools-saasApp.author.home.createLabel">Create a new Author</span>
+    </button>
+
+    <script type="text/ng-template" id="AuthorChangeModal">
+        <form name="editForm" role="form" novalidate
+              class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+              ng-submit="modal.save()">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myAuthorLabel" translate="telosys-tools-saasApp.author.home.createOrEditLabel">Create or edit a Author</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" class="form-control" name="id"
+                               ng-model="modal.authorEdited.id" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label translate="telosys-tools-saasApp.author.name">Name</label>
+                        <input type="text" class="form-control" name="name"
+                               ng-model="modal.authorEdited.name">
+                    </div>
+                    <div class="form-group">
+                        <label translate="telosys-tools-saasApp.author.birthDate">BirthDate</label>
+                        <input type="date" class="form-control" name="birthDate"
+                               ng-model="modal.authorEdited.birthDate">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modal.cancel()">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                </button>
+            </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="AuthorRemoveConfirmationModal">
+        <div class="modal-header">
+            <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+        </div>
+        <div class="modal-body">
+            <p translate="telosys-tools-saasApp.author.delete.question" translate-values="{id: '{{modalDelete.authorName}}'}">Are you sure you want to delete this Author?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modalDelete.cancel()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="button"  class="btn btn-danger" ng-click="modalDelete.confirmRemove()">
+                <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+            </button>
+        </div>
+    </script>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="telosys-tools-saasApp.author.name">Name</th>
+                    <th translate="telosys-tools-saasApp.author.birthDate">BirthDate</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="author in listCtrl.authors">
+                    <td><a ui-sref="authorDetail({id:author.id})">{{author.id}}</a></td>
+                    <td>{{author.name}}</td>
+                    <td>{{author.birthDate | date:'longDate'}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="authorDetail({id:author.id})"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="listCtrl.openEdit(author)"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="listCtrl.openRemove(author)"
+                                class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

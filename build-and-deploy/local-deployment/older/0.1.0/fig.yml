@@ -1,0 +1,9 @@
+telosys-tools-saasdb:
+  image: mongo:3.0
+
+application:
+  image: telosys-tools-saas/telosys-tools-saas:0.1.0
+  ports:
+    - "8080:8080"
+  links:
+    - telosys-tools-saasdb
